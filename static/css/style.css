@@ -242,10 +242,6 @@ input[type=text]:focus {
     cursor: pointer;
 }
 
-.w-veg-sm-chatbot {
-    width: 80%;
-}
-
 #vegChatBot {
     cursor: pointer;
 }
@@ -270,6 +266,10 @@ input[type=text]:focus {
 
     .chatbot-type {
         font-size: 18px;
+    }
+
+    .w-veg-sm-chatbot {
+        width: 80%;
     }
 }
 

@@ -1,0 +1,7 @@
+# Folders
+/Scripts
+/Include
+/Lib
+
+# Configuration Files
+pyvenv.cfg

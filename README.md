@@ -1,4 +1,4 @@
-#Vegetables and Fruits pricing ChatBot using Web Scraping
+#Vegetables and Fruits pricing ChatBot using Web Scraping#
 Web scraping is the process of automatically extracting information from websites. It involves fetching web pages, parsing their content, and extracting relevant data for further analysis or use. 
 Python is a popular programming language for web scraping due to its robust libraries and ease of use.
 

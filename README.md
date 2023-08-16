@@ -10,7 +10,9 @@ There are several libraries in Python that are commonly used for web scraping.<b
 
 ## Install Required Libraries: <br>
 Install the necessary libraries using pip. For example, to install Beautiful Soup and Requests use the following command<br>
-pip install beautifulsoup4 requests<br>
+```python
+pip install beautifulsoup4 requests
+```
 
 ## Send HTTP Requests: <br>
 Use the requests library to send an HTTP GET request to the URL of the webpage you want to scrape.<br>

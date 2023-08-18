@@ -1,5 +1,4 @@
-from flask import Flask, jsonify, request, render_template
-import pickle
+from flask import Flask, jsonify, render_template
 import requests
 from bs4 import BeautifulSoup
 

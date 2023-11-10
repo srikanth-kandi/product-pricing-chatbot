@@ -10,11 +10,27 @@ def web_scraping_veg_fruits(url, vegetable_name=""):
     html_content = response.content
 
     soup = BeautifulSoup(html_content, 'html.parser')
-
+    table = soup.find('table', {'id': 'customers'})
+    
     vegetable_details = []
+    for row in table.find_all('tr')[1:]:  # skip the header row
+        columns = row.find_all(['th', 'td'])
+        vegetable_name = columns[0].text.strip()
+        unit = columns[1].text.strip()
+        market_price = columns[2].text.strip()
+        retail_price_range = columns[3].text.strip()
+        mall_price_range = columns[4].text.strip()
 
-    table_rows = soup.select('.Table .Row')
+        vegetable_details.append({
+            'name': vegetable_name,
+            'unit': unit,
+            'marketPrice': market_price,
+            'retailPriceRange': retail_price_range,
+            'mallPriceRange': mall_price_range
+        })
 
+    '''table_rows = soup.select('.Table .Row')
+    print(table_rows)
     for row in table_rows:
         columns = row.select('.Cell')
         name = columns[0].text.strip()
@@ -30,7 +46,7 @@ def web_scraping_veg_fruits(url, vegetable_name=""):
                 'marketPrice': market_price,
                 'retailPriceRange': retail_price_range,
                 'mallPriceRange': mall_price_range
-            })
+            })'''
 
     return vegetable_details
 

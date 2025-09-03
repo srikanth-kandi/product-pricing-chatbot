@@ -6,9 +6,22 @@ app = Flask(__name__)
 
 
 def web_scraping_veg_fruits(url, vegetable_name=""):
-    response = requests.get(url)
+    try:
+        # First try with HTTPS
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()  # Raise an exception for bad status codes
+    except (requests.exceptions.RequestException, requests.exceptions.Timeout):
+        # If HTTPS fails, try with HTTP
+        try:
+            http_url = url.replace('https://', 'http://')
+            response = requests.get(http_url, timeout=10)
+            response.raise_for_status()
+        except (requests.exceptions.RequestException, requests.exceptions.Timeout) as e:
+            # If both HTTPS and HTTP fail, return empty list
+            print(f"Failed to fetch data from both HTTPS and HTTP URLs: {e}")
+            return []
+    
     html_content = response.content
-
     soup = BeautifulSoup(html_content, 'html.parser')
     table = soup.find('table', {'id': 'customers'})
     

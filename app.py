@@ -24,10 +24,17 @@ def web_scraping_veg_fruits(url, vegetable_name=""):
     html_content = response.content
     soup = BeautifulSoup(html_content, 'html.parser')
     table = soup.find('table', {'id': 'customers'})
-    
+
+    # Guard against missing table
+    if table is None:
+        print("Table with id='customers' not found on the page.")
+        return []
+
     vegetable_details = []
     for row in table.find_all('tr')[1:]:  # skip the header row
         columns = row.find_all(['th', 'td'])
+        if len(columns) < 5:
+            continue  # skip malformed/header/ad rows
         vegetable_name = columns[0].text.strip()
         unit = columns[1].text.strip()
         market_price = columns[2].text.strip()

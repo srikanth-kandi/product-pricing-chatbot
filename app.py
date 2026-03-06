@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 
 
-def web_scraping_veg_fruits(url, vegetable_name=""):
+def web_scraping_veg_fruits(url):
     try:
         # First try with HTTPS
         response = requests.get(url, timeout=10)
@@ -20,48 +20,46 @@ def web_scraping_veg_fruits(url, vegetable_name=""):
             # If both HTTPS and HTTP fail, return empty list
             print(f"Failed to fetch data from both HTTPS and HTTP URLs: {e}")
             return []
-    
+
     html_content = response.content
     soup = BeautifulSoup(html_content, 'html.parser')
     table = soup.find('table', {'id': 'customers'})
-    
-    vegetable_details = []
+
+    # Guard against missing table
+    if table is None:
+        print("Table with id='customers' not found on the page.")
+        return []
+
+    details = []
     for row in table.find_all('tr')[1:]:  # skip the header row
         columns = row.find_all(['th', 'td'])
-        vegetable_name = columns[0].text.strip()
-        unit = columns[1].text.strip()
-        market_price = columns[2].text.strip()
-        retail_price_range = columns[3].text.strip()
-        mall_price_range = columns[4].text.strip()
+        if len(columns) < 4:
+            continue  # skip malformed/header/city-link rows
 
-        vegetable_details.append({
-            'name': vegetable_name,
-            'unit': unit,
-            'marketPrice': market_price,
-            'retailPriceRange': retail_price_range,
-            'mallPriceRange': mall_price_range
-        })
-
-    '''table_rows = soup.select('.Table .Row')
-    print(table_rows)
-    for row in table_rows:
-        columns = row.select('.Cell')
         name = columns[0].text.strip()
         unit = columns[1].text.strip()
-        market_price = columns[2].text.strip()
+
+        # The market-price cell contains the price as direct text and an
+        # optional nested <span> with the trend arrow + percentage (e.g. "▲ 8.9%").
+        price_cell = columns[2]
+        # Direct text node (the numeric price)
+        market_price = price_cell.find(text=True, recursive=False)
+        market_price = market_price.strip() if market_price else price_cell.text.strip()
+        # Trend span – may be absent on some rows
+        trend_span = price_cell.find('span')
+        price_trend = trend_span.text.strip() if trend_span else ''
+
         retail_price_range = columns[3].text.strip()
-        mall_price_range = columns[4].text.strip()
 
-        if vegetable_name.lower() in name.lower():
-            vegetable_details.append({
-                'name': name,
-                'unit': unit,
-                'marketPrice': market_price,
-                'retailPriceRange': retail_price_range,
-                'mallPriceRange': mall_price_range
-            })'''
+        details.append({
+            'name': name,
+            'unit': unit,
+            'marketPrice': market_price,
+            'priceTrend': price_trend,
+            'retailPriceRange': retail_price_range,
+        })
 
-    return vegetable_details
+    return details
 
 
 @app.route('/')

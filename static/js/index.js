@@ -244,9 +244,19 @@ var response = (message) => {
     }
 };
 
+var getPriceTrendClass = (priceTrend) => {
+    if (priceTrend && priceTrend.includes('▲')) return 'price-up';
+    if (priceTrend && priceTrend.includes('▼')) return 'price-down';
+    return '';
+};
+
 var vegetableResponseObj = (obj) => {
-    const { mallPriceRange, marketPrice, name, retailPriceRange, unit } = obj;
-    const message = `Vegetable Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>,<br>Retail Price Range: <b>${retailPriceRange}</b>,<br>Mall Price Range: <b>${mallPriceRange}</b>`;
+    const { marketPrice, priceTrend, name, retailPriceRange, unit } = obj;
+    const trendClass = getPriceTrendClass(priceTrend);
+    const trendHtml = priceTrend
+        ? `<span class="price-change">(<span class="${trendClass}">${priceTrend}</span>)</span>`
+        : '';
+    const message = `Vegetable Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>${trendHtml},<br>Retail Price Range: <b>${retailPriceRange}</b>`;
     // Create a div element with the message
     var outputDiv = document.createElement('div');
     var outputMsgContainer = document.createElement('div');
@@ -271,8 +281,12 @@ var vegetableResponseObj = (obj) => {
 }
 
 var fruitResponseObj = (obj) => {
-    const { mallPriceRange, marketPrice, name, retailPriceRange, unit } = obj;
-    const message = `Fruit Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>,<br>Retail Price Range: <b>${retailPriceRange}</b>,<br>Mall Price Range: <b>${mallPriceRange}</b>`;
+    const { marketPrice, priceTrend, name, retailPriceRange, unit } = obj;
+    const trendClass = getPriceTrendClass(priceTrend);
+    const trendHtml = priceTrend
+        ? `<span class="price-change">(<span class="${trendClass}">${priceTrend}</span>)</span>`
+        : '';
+    const message = `Fruit Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>${trendHtml},<br>Retail Price Range: <b>${retailPriceRange}</b>`;
     // Create a div element with the message
     var outputDiv = document.createElement('div');
     var outputMsgContainer = document.createElement('div');

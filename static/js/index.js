@@ -247,7 +247,7 @@ var response = (message) => {
 var vegetableResponseObj = (obj) => {
     const { marketPrice, priceTrend, name, retailPriceRange, unit } = obj;
     const trendHtml = priceTrend
-        ? ` <span class="${priceTrend.includes('▲') ? 'price-up' : priceTrend.includes('▼') ? 'price-down' : ''}">${priceTrend}</span>`
+        ? `<span style="padding-left: 10px">(<span class="${priceTrend.includes('▲') ? 'price-up' : priceTrend.includes('▼') ? 'price-down' : ''}">${priceTrend}</span>)</span>`
         : '';
     const message = `Vegetable Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>${trendHtml},<br>Retail Price Range: <b>${retailPriceRange}</b>`;
     // Create a div element with the message
@@ -276,7 +276,7 @@ var vegetableResponseObj = (obj) => {
 var fruitResponseObj = (obj) => {
     const { marketPrice, priceTrend, name, retailPriceRange, unit } = obj;
     const trendHtml = priceTrend
-        ? ` <span class="${priceTrend.includes('▲') ? 'price-up' : priceTrend.includes('▼') ? 'price-down' : ''}">${priceTrend}</span>`
+        ? `<span style="padding-left: 10px">(<span class="${priceTrend.includes('▲') ? 'price-up' : priceTrend.includes('▼') ? 'price-down' : ''}">${priceTrend}</span>)</span>`
         : '';
     const message = `Fruit Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>${trendHtml},<br>Retail Price Range: <b>${retailPriceRange}</b>`;
     // Create a div element with the message

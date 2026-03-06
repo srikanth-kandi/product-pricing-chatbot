@@ -245,8 +245,11 @@ var response = (message) => {
 };
 
 var vegetableResponseObj = (obj) => {
-    const { marketPrice, name, retailPriceRange, unit } = obj;
-    const message = `Vegetable Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>,<br>Retail Price Range: <b>${retailPriceRange}</b>`;
+    const { marketPrice, priceTrend, name, retailPriceRange, unit } = obj;
+    const trendHtml = priceTrend
+        ? ` <span class="${priceTrend.includes('▲') ? 'price-up' : priceTrend.includes('▼') ? 'price-down' : ''}">${priceTrend}</span>`
+        : '';
+    const message = `Vegetable Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>${trendHtml},<br>Retail Price Range: <b>${retailPriceRange}</b>`;
     // Create a div element with the message
     var outputDiv = document.createElement('div');
     var outputMsgContainer = document.createElement('div');
@@ -271,8 +274,11 @@ var vegetableResponseObj = (obj) => {
 }
 
 var fruitResponseObj = (obj) => {
-    const { marketPrice, name, retailPriceRange, unit } = obj;
-    const message = `Fruit Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>,<br>Retail Price Range: <b>${retailPriceRange}</b>`;
+    const { marketPrice, priceTrend, name, retailPriceRange, unit } = obj;
+    const trendHtml = priceTrend
+        ? ` <span class="${priceTrend.includes('▲') ? 'price-up' : priceTrend.includes('▼') ? 'price-down' : ''}">${priceTrend}</span>`
+        : '';
+    const message = `Fruit Name: <b>${name}</b>,<br>Unit: <b>${unit}</b>,<br>Market Price: <b>${marketPrice}</b>${trendHtml},<br>Retail Price Range: <b>${retailPriceRange}</b>`;
     // Create a div element with the message
     var outputDiv = document.createElement('div');
     var outputMsgContainer = document.createElement('div');

@@ -187,7 +187,7 @@ input[type=text]:focus {
 .output-msg-container {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     background-color: #111827;
     margin: 10px;
     margin-bottom: 15px;

@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 
 
-def web_scraping_veg_fruits(url, vegetable_name=""):
+def web_scraping_veg_fruits(url):
     try:
         # First try with HTTPS
         response = requests.get(url, timeout=10)
